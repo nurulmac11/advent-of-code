@@ -13,7 +13,7 @@ def get_number(line):
     nums = ""
     nums_nonorder = []
     for digit in digit_map:
-        # get all matches
+        # get index of all occurrences
         index_list = [m.start() for m in re.finditer(f'(?={digit[0]})', line)]
         if index_list:
             for index in index_list:
