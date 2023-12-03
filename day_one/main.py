@@ -17,15 +17,12 @@ def get_number(line):
         index_list = [m.start() for m in re.finditer(f'(?={digit[0]})', line)]
         if index_list:
             for index in index_list:
-                if index is not None:
-                    nums_nonorder.append([digit[1], index, len(digit[0])])
-    nums_nonorder.sort(key = lambda x: x[1])
-    nums_checked = nums_nonorder
+                nums_nonorder.append([digit[1], index, len(digit[0])])
+    nums_checked = sorted(nums_nonorder, key = lambda x: x[1])
     
-    if len(nums_checked) == 1:
-        nums_checked *= 2
-    elif not nums_checked:
+    if not nums_checked:
         return 0 
+
     num = nums_checked[0][0] + nums_checked[-1][0]
 
     return int(num)
