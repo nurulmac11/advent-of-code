@@ -1,3 +1,5 @@
+import re
+
 
 #input_file = 'input_test.txt' # Test
 input_file = 'input.txt'
@@ -11,32 +13,21 @@ def get_number(line):
     nums = ""
     nums_nonorder = []
     for digit in digit_map:
-        try:
-            index = line.index(digit[0])
-        except ValueError:
-            index = None
-        if index is not None:
-            nums_nonorder.append([digit[1], index, len(digit[0])])
+        # get all matches
+        index_list = [m.start() for m in re.finditer(f'(?={digit[0]})', line)]
+        if index_list:
+            for index in index_list:
+                if index is not None:
+                    nums_nonorder.append([digit[1], index, len(digit[0])])
     nums_nonorder.sort(key = lambda x: x[1])
     nums_checked = nums_nonorder
-    '''
-    nums_checked = []
-    # sanity check
-    last_index = -1
-    for num in nums_nonorder:
-        if num[1] > last_index:
-            nums_checked.append(num)
-            last_index += num[2]
-    '''
+    
     if len(nums_checked) == 1:
         nums_checked *= 2
     elif not nums_checked:
         return 0 
     num = nums_checked[0][0] + nums_checked[-1][0]
 
-    print("before", line, "after", nums_checked)
-    print("result:",num)
-    print()
     return int(num)
     
 
