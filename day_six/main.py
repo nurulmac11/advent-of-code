@@ -12,9 +12,13 @@ def parse_file(file_path):
                 values = [int(val) for val in parts[1:]]
                 data[label].extend(values)
     td = []
-    for i, time in enumerate(data['Time']):
-        td.append([time, data['Distance'][i]])
-    return td
+    longtime = ""
+    longdistance = ""
+    for time in data['Time']:
+        longtime += str(time)
+    for distance in data['Distance']:
+        longdistance += str(distance)
+    return [[int(longtime), int(longdistance)]]
 
 def runs(time, record):
     # time:7, record: 9
@@ -33,6 +37,8 @@ def runs(time, record):
 
 td_list = parse_file(file_path)
 result = 1
+print(td_list)
+
 for time, record in td_list:
     r = runs(time, record)
     print(f"record count for {time} is {r}")
