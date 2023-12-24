@@ -71,9 +71,7 @@ def analyze_cards(cards):
         wo_joker_counts[0] = str(int(wo_joker_counts[0]) + joker_count)
         joker_hashed = "-".join(sorted(wo_joker_counts, reverse=True))
         return deck_mapper[joker_hashed]
-    # print(counts, wo_joker_counts)
     hashed = "-".join(sorted(counts, reverse=True))
-    # print(counts, hashed, deck_mapper[hashed])
     return deck_mapper[hashed]
 
 
@@ -91,16 +89,14 @@ for cards, bid in player_list:
     deck_list[deck_name].append(cards)
     deck_bid[cards] = int(bid)
 
-print(deck_list)
 for k in deck_list:
     result = sorted(deck_list[k], key=functools.cmp_to_key(compare_deck), reverse=True)
     deck_list[k] = result
 rank = len(player_list)
 result = 0
-print(deck_list)
+
 for set_name, decks in deck_list.items():
     for deck in decks:
-        print(deck, rank)
         result += rank * deck_bid[deck]
         rank -= 1
 
