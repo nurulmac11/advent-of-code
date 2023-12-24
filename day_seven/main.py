@@ -4,7 +4,9 @@ import functools
 file_path = "test_input.txt"
 file_path = "input.txt"
 
-card_13 = {'A': 13, 'K': 12, 'Q': 11, 'J': 10, 'T': 9, '9': 8, '8': 7, '7': 6, '6': 5, '5': 4, '4': 3, '3': 2, '2': 1}
+# card_13 = {'A': 13, 'K': 12, 'Q': 11, 'J': 10, 'T': 9, '9': 8, '8': 7, '7': 6, '6': 5, '5': 4, '4': 3, '3': 2, '2': 1}
+card_13 = {'A': 13, 'K': 12, 'Q': 11, 'T': 10, '9': 9, '8': 8, '7': 7, '6': 6, '5': 5, '4': 4, '3': 3, '2': 2, 'J': 1}
+
 
 def compare_deck(item1, item2):
     for i in range(len(item1)):
@@ -48,11 +50,28 @@ def parse_file(file_path):
 def analyze_cards(cards):
     global deck_mapper
     card_dict = defaultdict(int)
+    joker_count = 0
+    wo_joker_dict = defaultdict(int)
     for c in cards:
+        if c == 'J':
+            joker_count += 1
+        else:
+            wo_joker_dict[c] += 1
         card_dict[c] += 1
+
+    print(card_dict)
     counts = []
+    wo_joker_counts = []
     for k, v in card_dict.items():
         counts.append(str(v))
+    for k, v in wo_joker_dict.items():
+        wo_joker_counts.append(str(v))
+    if wo_joker_counts:
+        wo_joker_counts.sort(reverse=True)
+        wo_joker_counts[0] = str(int(wo_joker_counts[0]) + joker_count)
+        joker_hashed = "-".join(sorted(wo_joker_counts, reverse=True))
+        return deck_mapper[joker_hashed]
+    # print(counts, wo_joker_counts)
     hashed = "-".join(sorted(counts, reverse=True))
     # print(counts, hashed, deck_mapper[hashed])
     return deck_mapper[hashed]
