@@ -26,14 +26,14 @@ def parse_down(nums):
     if is_same:
         return last
     else:
-        return diffs[-1] + parse_down(diffs)
+        return diffs[0] - parse_down(diffs)
 
 parse_file(file_path)
 results = []
 for num in num_list:
     print(num)
     r = parse_down(num)
-    results.append(num[-1] + r)
+    results.append(num[0] - r)
     print(r)
     print('\n')
 print(sum(results))
